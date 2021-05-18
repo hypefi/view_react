@@ -3,6 +3,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const FeedListItem = ({
   entry: {
@@ -21,7 +24,9 @@ const FeedListItem = ({
       primary={name}
       secondary={artist}
     />
-  </ListItem>
+    <Checkbox onClick={e => e.preventDefault()} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+      </ListItem>
+
   </Link>
 );
 
