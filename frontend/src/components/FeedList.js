@@ -7,7 +7,7 @@ import {
 
 const FeedList = () => {
   const feed = useSelector(filteredFeedSelector);
-
+  console.log(feed);
   return (
     <List>
       {

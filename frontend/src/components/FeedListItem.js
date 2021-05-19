@@ -5,7 +5,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-import Checkbox from '@material-ui/core/Checkbox';
+import Switch from '@material-ui/core/Switch';
+import React, { useState } from 'react';
+
 
 const FeedListItem = ({
   entry: {
@@ -14,7 +16,15 @@ const FeedListItem = ({
     link,
     artist,
   },
-}) => (
+}) => {
+const [checked, setChecked] = useState();  
+
+const handleChange = event => {
+  setChecked(event.target.checked);
+
+};
+
+return(
   <Link href={link} target="_blank" underline="none" color="inherit">
   <ListItem button>
     <ListItemAvatar>
@@ -24,10 +34,12 @@ const FeedListItem = ({
       primary={name}
       secondary={artist}
     />
-    <Checkbox onClick={e => e.preventDefault()} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+    <Switch onClick={e => e.preventDefault()} onChange={handleChange} checked={checked || false} checkedIcon={<Favorite />} UncheckedIcon={<FavoriteBorder />} />
       </ListItem>
 
   </Link>
 );
+};
+
 
 export default FeedListItem;
