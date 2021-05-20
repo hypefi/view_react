@@ -9,8 +9,21 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 
+function usePersistedState(key, defaultValue) {
+  
+  console.log("local", localStorage.getItem(key) || defaultValue)
 
 
+
+  const [state, setState] = useState(
+    () => JSON.parse(localStorage.getItem(key)) || defaultValue
+  );
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+  return [state, setState];
+}
 
 const FeedListItem = ({
   entry: {
@@ -21,7 +34,7 @@ const FeedListItem = ({
   },
 }) => {
   
-const [checkedir, setChecked] = useState(false); 
+const [checkedir, setChecked] = usePersistedState(false, false); 
 
 const handleChange = event => {
   event.preventDefault();
@@ -33,7 +46,6 @@ const handleChange = event => {
 };
 
 useEffect(() => {
-    // action on update of movies
     console.log(checkedir);
 }, [checkedir]);
 
