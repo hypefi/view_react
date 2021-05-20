@@ -5,8 +5,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-import Switch from '@material-ui/core/Switch';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import Checkbox from '@material-ui/core/Checkbox';
+
+
 
 
 const FeedListItem = ({
@@ -17,12 +20,22 @@ const FeedListItem = ({
     artist,
   },
 }) => {
-const [checked, setChecked] = useState();  
+  
+const [checkedir, setChecked] = useState(false); 
 
 const handleChange = event => {
-  setChecked(event.target.checked);
+  event.preventDefault();
+  event.stopPropagation();
+  event.nativeEvent.stopImmediatePropagation();
 
+  console.log(event.target.checked);
+  setChecked(event.target.checked);
 };
+
+useEffect(() => {
+    // action on update of movies
+    console.log(checkedir);
+}, [checkedir]);
 
 return(
   <Link href={link} target="_blank" underline="none" color="inherit">
@@ -34,12 +47,10 @@ return(
       primary={name}
       secondary={artist}
     />
-    <Switch onClick={e => e.preventDefault()} onChange={handleChange} checked={checked || false} checkedIcon={<Favorite />} UncheckedIcon={<FavoriteBorder />} />
-      </ListItem>
-
+    <Checkbox onChange={handleChange} checked={checkedir || false} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+    </ListItem>
   </Link>
 );
 };
-
 
 export default FeedListItem;
