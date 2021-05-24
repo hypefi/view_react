@@ -47,7 +47,6 @@ useEffect(() => {
     console.log("checkedir", checkedir, "id", id);
     let stt = JSON.parse(localStorage.getItem(id)) || false;
     console.log(stt);
-    checkedir = stt;
   }, [checkedir]);
 
 return(
