@@ -12,7 +12,7 @@ const FeedList = () => {
     <List>
       {
         feed.map(entry => (
-          <FeedListItem key={entry.id} entry={entry} />
+          <FeedListItem key={entry.id} id={entry.id} entry={entry} />
         ))
       }
     </List>

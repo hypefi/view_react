@@ -11,17 +11,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 function usePersistedState(key, defaultValue) {
   
-  console.log("local", localStorage.getItem(key) || defaultValue)
-
-
-
   const [state, setState] = useState(
     () => JSON.parse(localStorage.getItem(key)) || defaultValue
   );
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
+    localStorage.setItem(JSON.stringify(state), key);
   }, [key, state]);
+
   return [state, setState];
 }
 
@@ -32,8 +29,9 @@ const FeedListItem = ({
     link,
     artist,
   },
+  id,
 }) => {
-  
+  //https://dev.to/selbekk/persisting-your-react-state-in-9-lines-of-code-9go
 const [checkedir, setChecked] = usePersistedState(false, false); 
 
 const handleChange = event => {
@@ -41,13 +39,16 @@ const handleChange = event => {
   event.stopPropagation();
   event.nativeEvent.stopImmediatePropagation();
 
-  console.log(event.target.checked);
-  setChecked(event.target.checked);
+  console.log(id);
+  setChecked(id,event.target.checked);
 };
 
 useEffect(() => {
-    console.log(checkedir);
-}, [checkedir]);
+    console.log("checkedir", checkedir, "id", id);
+    let stt = JSON.parse(localStorage.getItem(id)) || false;
+    console.log(stt);
+    checkedir = stt;
+  }, [checkedir]);
 
 return(
   <Link href={link} target="_blank" underline="none" color="inherit">
