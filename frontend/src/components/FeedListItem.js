@@ -10,7 +10,9 @@ import { useEffect } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 
 function usePersistedState(key, defaultValue) {
-  
+  let jspars = JSON.parse(localStorage.getItem(key));
+  console.log("jspars", jspars, localStorage.getItem(key), key);
+
   const [state, setState] = useState(
     () => JSON.parse(localStorage.getItem(key)) || defaultValue
   );
@@ -31,20 +33,22 @@ const FeedListItem = ({
   },
   id,
 }) => {
-  //https://dev.to/selbekk/persisting-your-react-state-in-9-lines-of-code-9go
-const [checkedir, setChecked] = usePersistedState(false, false); 
+//https://dev.to/selbekk/persisting-your-react-state-in-9-lines-of-code-9go
+const [checkedir, setChecked] = usePersistedState(id, false); 
 
-const handleChange = event => {
+const handleChange = event => { 
   event.preventDefault();
   event.stopPropagation();
   event.nativeEvent.stopImmediatePropagation();
 
-  console.log(id);
-  setChecked(id,event.target.checked);
+  console.log('checked?', event.target.checked);
+  console.log(id, event.target.checked);
+  setChecked(id, event.target.checked);
 };
 
 useEffect(() => {
-    console.log("checkedir", checkedir, "id", id);
+  console.log("component updated");  
+  console.log("checkedir", checkedir, "id", id);
     let stt = JSON.parse(localStorage.getItem(id)) || false;
     console.log(stt);
   }, [checkedir]);
